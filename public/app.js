@@ -1,16 +1,36 @@
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("service-worker.js")
-      .then((registration) => {
-        console.log(
-          "Service Worker registered with scope:",
-          registration.scope
-        );
-      })
-      .catch((error) => {
-        console.log("Service Worker registration failed:", error);
-      });
+  window.addEventListener("load", async () => {
+    try {
+      // 서비스 워커 등록
+      const registration = await navigator.serviceWorker.register(
+        "/service-worker.js"
+      );
+      console.log("Service Worker registered with scope:", registration.scope);
+
+      // 주기적인 백그라운드 동기화 기능이 지원되는지 확인
+      if ("periodicSync" in registration) {
+        const status = await navigator.permissions.query({
+          name: "periodic-background-sync",
+        });
+
+        if (status.state === "granted") {
+          // 주기적인 동기화 등록 (최소 간격 설정: 5분 = 300000 ms)
+          await registration.periodicSync.register("location-sync", {
+            minInterval: 5 * 60 * 1000, // 5분 간격으로 동기화
+          });
+          console.log("Periodic Background Sync registered");
+        } else {
+          console.log("Periodic Background Sync permission denied");
+        }
+      } else {
+        console.log("Periodic Background Sync not supported");
+      }
+    } catch (error) {
+      console.error(
+        "Error registering Service Worker or Periodic Sync:",
+        error
+      );
+    }
   });
 }
 
