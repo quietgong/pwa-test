@@ -24,6 +24,9 @@ document.getElementById("startTracking").addEventListener("click", () => {
         (position) => {
           console.log("위도:", position.coords.latitude);
           console.log("경도:", position.coords.longitude);
+          document.getElementById(
+            "status"
+          ).innerText = `위도 : ${position.coords.latitude}, 경도 : ${position.coords.longitude}`;
 
           // 서버로 위치 정보 전송
           sendPositionToServer(
