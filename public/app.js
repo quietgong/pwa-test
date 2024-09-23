@@ -33,6 +33,9 @@ if ("serviceWorker" in navigator) {
     }
   });
 }
+else {
+  console.log("serviceworker 찾을 수 없음");
+}
 
 let trackingInterval;
 
