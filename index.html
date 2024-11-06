@@ -10,11 +10,14 @@
 <body>
   <script>
     const url = "https://s4v9eggid0.execute-api.ap-northeast-2.amazonaws.com/Prod/test/upper?text=asdf";
-    const data = fetch(url, {
+
+    fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => console.log(response.json()))
+      .then((response) => response.text()) // response.text() 호출하여 텍스트 값 가져오기
+      .then((data) => console.log(data))    // 텍스트 데이터를 로그에 출력
+      .catch((error) => console.error("Error:", error)); // 오류가 발생했을 때 로그 출력
   </script>
 </body>
 
