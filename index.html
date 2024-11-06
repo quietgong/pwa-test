@@ -8,11 +8,13 @@
 </head>
 
 <body>
-  <h1 id="result"></h1>
   <script>
-    fetch("https://s4v9eggid0.execute-api.ap-northeast-2.amazonaws.com/Prod/test/upper?text=asdf").then((res)=>{
-      console.log(res.json())
+    const url = "https://s4v9eggid0.execute-api.ap-northeast-2.amazonaws.com/Prod/test/upper?text=asdf";
+    const data = fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     })
+      .then((response) => console.log(response.json()))
   </script>
 </body>
 
